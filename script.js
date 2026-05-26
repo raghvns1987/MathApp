@@ -8,6 +8,22 @@ let gameState = {
     operation: '' // 'addition' or 'subtraction'
 };
 
+// Select player
+function selectPlayer(playerName) {
+    gameState.userName = playerName;
+
+    // Highlight selected player button
+    const buttons = document.querySelectorAll('.player-btn');
+    buttons.forEach(btn => {
+        if (btn.textContent.includes(playerName)) {
+            btn.style.opacity = '1';
+            btn.style.transform = 'scale(1.1)';
+        } else {
+            btn.style.opacity = '0.5';
+        }
+    });
+}
+
 // Select operation (addition or subtraction)
 function selectOperation(operation) {
     gameState.operation = operation;
@@ -27,11 +43,10 @@ function selectOperation(operation) {
 }
 
 // Setup the game
-function setupGame(digits, name = '') {
-    // Validate that name is provided
-    if (!name || name.trim() === '') {
-        alert('Please enter your name to start!');
-        document.getElementById('userName').focus();
+function setupGame(digits) {
+    // Validate that player is selected
+    if (!gameState.userName) {
+        alert('Please select a player first!');
         return;
     }
 
@@ -44,7 +59,6 @@ function setupGame(digits, name = '') {
     gameState.digits = digits;
     gameState.score = 0;
     gameState.gameActive = true;
-    gameState.userName = name.trim();
 
     // Hide setup section, show game section
     document.getElementById('setupSection').classList.add('hidden');
@@ -139,6 +153,13 @@ function showCelebration() {
     const modal = document.getElementById('celebrationModal');
     modal.classList.remove('hidden');
 
+    // Set player image
+    const playerImage = document.getElementById('celebrationPlayerImage');
+    const imagePath = gameState.userName === 'NILAN'
+        ? './Picture/Nilan.jpeg'
+        : './Picture/Mithula.jpeg';
+    playerImage.src = imagePath;
+
     // Random celebration messages with user's name
     const messages = [
         `🌟 ${gameState.userName}, you got it right!`,
@@ -199,6 +220,14 @@ function showIncorrectAnswer() {
     document.getElementById('correctAnswerDisplay').classList.add('hidden');
     document.getElementById('correctAnswerDisplay').textContent = '';
     document.querySelector('.show-answer-btn').style.display = 'block';
+
+    // Set player image
+    const playerImage = document.getElementById('incorrectPlayerImage');
+    const imagePath = gameState.userName === 'NILAN'
+        ? './Picture/Nilan.jpeg'
+        : './Picture/Mithula.jpeg';
+    playerImage.src = imagePath;
+
     modal.classList.remove('hidden');
 }
 
@@ -237,6 +266,13 @@ function resetGame() {
     document.getElementById('difficultyLabel').style.display = 'none';
     document.getElementById('digitOptions').style.display = 'none';
 
+    // Reset player button visibility
+    const playerButtons = document.querySelectorAll('.player-btn');
+    playerButtons.forEach(btn => {
+        btn.style.opacity = '1';
+        btn.style.transform = 'scale(1)';
+    });
+
     // Reset operation button visibility
     const buttons = document.querySelectorAll('.operation-btn');
     buttons.forEach(btn => btn.style.opacity = '1');
@@ -254,8 +290,6 @@ function resetGame() {
         userName: '',
         operation: ''
     };
-
-    document.getElementById('userName').focus();
 }
 
 // Initialize

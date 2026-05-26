@@ -21,9 +21,17 @@
                 <h2>🚀 Let's Get Started!</h2>
 
                 <div class="name-input-section">
-                    <label for="userName">What's your name?</label>
-                    <input type="text" id="userName" class="name-input" placeholder="Enter your name"
-                        autocomplete="off">
+                    <label>Who is playing?</label>
+                    <div class="player-options">
+                        <button class="player-btn" onclick="selectPlayer('NILAN')">
+                            <img src="./Picture/Nilan.jpeg" alt="NILAN" class="player-image">
+                            <span class="player-name">NILAN</span>
+                        </button>
+                        <button class="player-btn" onclick="selectPlayer('MITHULA')">
+                            <img src="./Picture/Mithula.jpeg" alt="MITHULA" class="player-image">
+                            <span class="player-name">MITHULA</span>
+                        </button>
+                    </div>
                 </div>
 
                 <p class="section-title">Select your operation:</p>
@@ -43,15 +51,15 @@
                     the problems:</p>
 
                 <div class="digit-options" id="digitOptions" style="display:none;">
-                    <button class="digit-btn" onclick="setupGame(1, document.getElementById('userName').value)">
+                    <button class="digit-btn" onclick="setupGame(1)">
                         <span class="digit-icon">1️⃣</span>
                         <span class="digit-label">1 Digit</span>
                     </button>
-                    <button class="digit-btn" onclick="setupGame(2, document.getElementById('userName').value)">
+                    <button class="digit-btn" onclick="setupGame(2)">
                         <span class="digit-icon">2️⃣</span>
                         <span class="digit-label">2 Digits</span>
                     </button>
-                    <button class="digit-btn" onclick="setupGame(3, document.getElementById('userName').value)">
+                    <button class="digit-btn" onclick="setupGame(3)">
                         <span class="digit-icon">3️⃣</span>
                         <span class="digit-label">3 Digits</span>
                     </button>
@@ -95,6 +103,7 @@
     <!-- Celebration Modal -->
     <div id="celebrationModal" class="celebration-modal hidden">
         <div class="celebration-content">
+            <img id="celebrationPlayerImage" src="" alt="Player" class="modal-player-image">
             <div class="celebration-emoji">🎉</div>
             <h2>Fantastic Work!</h2>
             <div class="celebration-stars">
@@ -112,6 +121,7 @@
     <!-- Incorrect Answer Modal -->
     <div id="incorrectModal" class="incorrect-modal hidden">
         <div class="incorrect-content">
+            <img id="incorrectPlayerImage" src="" alt="Player" class="modal-player-image">
             <div class="incorrect-emoji">😢</div>
             <h2>Oops!</h2>
             <p class="incorrect-message">Not quite right, <span id="incorrectUserName"></span>!</p>
