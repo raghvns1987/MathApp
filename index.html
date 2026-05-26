@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎓 Math Adventure - Addition Quest</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Math Adventure</h1>
+            <p class="subtitle">Addition Quest</p>
+        </div>
+
+        <!-- Setup Section -->
+        <div id="setupSection" class="section setup-section">
+            <div class="setup-box">
+                <h2>🚀 Let's Get Started!</h2>
+
+                <div class="name-input-section">
+                    <label for="userName">What's your name?</label>
+                    <input type="text" id="userName" class="name-input" placeholder="Enter your name"
+                        autocomplete="off">
+                </div>
+
+                <p>Select how many digits you want for the addition problems:</p>
+
+                <div class="digit-options">
+                    <button class="digit-btn" onclick="setupGame(1, document.getElementById('userName').value)">
+                        <span class="digit-icon">1️⃣</span>
+                        <span class="digit-label">1 Digit</span>
+                    </button>
+                    <button class="digit-btn" onclick="setupGame(2, document.getElementById('userName').value)">
+                        <span class="digit-icon">2️⃣</span>
+                        <span class="digit-label">2 Digits</span>
+                    </button>
+                    <button class="digit-btn" onclick="setupGame(3, document.getElementById('userName').value)">
+                        <span class="digit-icon">3️⃣</span>
+                        <span class="digit-label">3 Digits</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Section -->
+        <div id="gameSection" class="section game-section hidden">
+            <div class="game-header">
+                <div class="score-box">
+                    <span class="score-label">Problems Solved:</span>
+                    <span id="scoreValue" class="score-value">0</span>
+                </div>
+                <button class="reset-btn" onclick="resetGame()">🔄 New Game</button>
+            </div>
+
+            <div class="problem-box">
+                <div class="problem-display">
+                    <span id="num1" class="number">0</span>
+                    <span class="operator">+</span>
+                    <span id="num2" class="number">0</span>
+                    <span class="equals">=</span>
+                    <span class="question-mark">?</span>
+                </div>
+            </div>
+
+            <div class="input-section">
+                <input type="number" id="answerInput" class="answer-input" placeholder="Enter your answer"
+                    onkeypress="handleKeyPress(event)" autocomplete="off">
+                <button class="submit-btn" onclick="checkAnswer()">✔️ Check</button>
+            </div>
+
+            <div id="feedback" class="feedback hidden"></div>
+        </div>
+    </div>
+
+    <!-- Confetti Animation -->
+    <div id="confetti-container" class="confetti-container"></div>
+
+    <!-- Celebration Modal -->
+    <div id="celebrationModal" class="celebration-modal hidden">
+        <div class="celebration-content">
+            <div class="celebration-emoji">🎉</div>
+            <h2>Fantastic Work!</h2>
+            <div class="celebration-stars">
+                <span class="star">⭐</span>
+                <span class="star">⭐</span>
+                <span class="star">⭐</span>
+                <span class="star">⭐</span>
+                <span class="star">⭐</span>
+            </div>
+            <p class="celebration-message">You got it right!</p>
+            <button class="next-btn" onclick="generateProblem()">Next Problem →</button>
+        </div>
+    </div>
+
+    <!-- Incorrect Answer Modal -->
+    <div id="incorrectModal" class="incorrect-modal hidden">
+        <div class="incorrect-content">
+            <div class="incorrect-emoji">😢</div>
+            <h2>Oops!</h2>
+            <p class="incorrect-message">Not quite right, <span id="incorrectUserName"></span>!</p>
+            <p class="try-again-text">Give it another try!</p>
+            <div class="incorrect-buttons">
+                <button class="retry-btn" onclick="retryProblem()">Try Again</button>
+                <button class="show-answer-btn" onclick="showCorrectAnswer()">Show Answer</button>
+            </div>
+            <p id="correctAnswerDisplay" class="correct-answer-text hidden"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
