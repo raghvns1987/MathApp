@@ -8,6 +8,71 @@ let gameState = {
     operation: '' // 'addition' or 'subtraction'
 };
 
+// Text-to-Speech functionality
+const synth = window.speechSynthesis;
+let isSpeaking = false;
+
+// Speak the problem aloud
+function speakProblem() {
+    // Cancel any ongoing speech
+    if (synth.speaking) {
+        synth.cancel();
+        isSpeaking = false;
+        return;
+    }
+
+    const num1 = gameState.num1;
+    const num2 = gameState.num2;
+    const operationWord = gameState.operation === 'addition' ? 'plus' : 'minus';
+
+    const text = `${num1} ${operationWord} ${num2}`;
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    // Get volume from slider
+    const volume = document.getElementById('volumeSlider').value / 100;
+    utterance.volume = volume;
+
+    // Speech properties
+    utterance.rate = 0.9; // Slower speech for clarity
+    utterance.pitch = 1;
+    utterance.lang = 'en-US';
+
+    // Update button visual feedback
+    utterance.onstart = () => {
+        isSpeaking = true;
+        const speakBtn = document.querySelector('.speak-btn');
+        speakBtn.style.background = 'linear-gradient(135deg, #00f2fe 0%, #4facfe 100%)';
+    };
+
+    utterance.onend = () => {
+        isSpeaking = false;
+        const speakBtn = document.querySelector('.speak-btn');
+        speakBtn.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
+    };
+
+    utterance.onerror = () => {
+        isSpeaking = false;
+    };
+
+    synth.speak(utterance);
+}
+
+// Update volume when slider changes
+document.addEventListener('DOMContentLoaded', () => {
+    const volumeSlider = document.getElementById('volumeSlider');
+    if (volumeSlider) {
+        volumeSlider.addEventListener('change', (e) => {
+            // Update volume for current or next speech
+            if (synth.speaking) {
+                // Cancel current speech so next one uses new volume
+                synth.cancel();
+                isSpeaking = false;
+            }
+        });
+    }
+});
+
 // Select player
 function selectPlayer(playerName) {
     gameState.userName = playerName;
