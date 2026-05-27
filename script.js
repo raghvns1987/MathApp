@@ -12,7 +12,7 @@ let gameState = {
 function playSound(type) {
     try {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        
+
         if (type === 'correct') {
             // Clap/celebration sound - three ascending tones
             playCorrectSound(audioContext);
@@ -28,26 +28,26 @@ function playSound(type) {
 function playCorrectSound(audioContext) {
     const now = audioContext.currentTime;
     const tempo = 0.1;
-    
+
     // Create three cheerful tones
     const frequencies = [523.25, 659.25, 783.99]; // C5, E5, G5 (C major chord)
-    
+
     frequencies.forEach((freq, index) => {
         const osc = audioContext.createOscillator();
         const gain = audioContext.createGain();
-        
+
         osc.connect(gain);
         gain.connect(audioContext.destination);
-        
+
         osc.frequency.value = freq;
         osc.type = 'sine';
-        
+
         const startTime = now + (index * tempo);
         const endTime = startTime + (tempo * 1.5);
-        
+
         gain.gain.setValueAtTime(0.3, startTime);
         gain.gain.exponentialRampToValueAtTime(0.01, endTime);
-        
+
         osc.start(startTime);
         osc.stop(endTime);
     });
@@ -55,26 +55,26 @@ function playCorrectSound(audioContext) {
 
 function playIncorrectSound(audioContext) {
     const now = audioContext.currentTime;
-    
+
     // Create buzzer sound - two low tones
     const frequencies = [200, 150];
-    
+
     frequencies.forEach((freq, index) => {
         const osc = audioContext.createOscillator();
         const gain = audioContext.createGain();
-        
+
         osc.connect(gain);
         gain.connect(audioContext.destination);
-        
+
         osc.frequency.value = freq;
         osc.type = 'square';
-        
+
         const startTime = now + (index * 0.15);
         const endTime = startTime + 0.15;
-        
+
         gain.gain.setValueAtTime(0.2, startTime);
         gain.gain.exponentialRampToValueAtTime(0.01, endTime);
-        
+
         osc.start(startTime);
         osc.stop(endTime);
     });
