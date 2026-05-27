@@ -255,32 +255,31 @@ function generateProblem() {
 
 // Toggle visual representation
 function toggleVisualRepresentation() {
-    const visualTile = document.getElementById('visualTile');
-    const isChecked = document.getElementById('visualToggle').checked;
-
-    if (isChecked && gameState.digits === 1 && gameState.operation === 'addition') {
-        visualTile.classList.remove('hidden');
-        updateVisualRepresentation();
-    } else {
-        visualTile.classList.add('hidden');
-    }
+    updateVisualRepresentation();
 }
 
 // Update visual representation with lines
 function updateVisualRepresentation() {
     const visualTile = document.getElementById('visualTile');
     const isChecked = document.getElementById('visualToggle').checked;
+    const linesDisplay = document.getElementById('linesDisplay');
 
-    // Only show for 1-digit addition
-    if (!isChecked || gameState.digits !== 1 || gameState.operation !== 'addition') {
+    // Hide tile completely if toggle is off
+    if (!isChecked) {
         visualTile.classList.add('hidden');
+        linesDisplay.innerHTML = '';
+        return;
+    }
+
+    // Only render lines for 1-digit addition when toggle is on
+    if (gameState.digits !== 1 || gameState.operation !== 'addition') {
+        visualTile.classList.add('hidden');
+        linesDisplay.innerHTML = '';
         return;
     }
 
     visualTile.classList.remove('hidden');
-
-    const lineSize = document.getElementById('lineSizeSlider').value;
-    const linesDisplay = document.getElementById('linesDisplay');
+    const lineSize = 40;
     linesDisplay.innerHTML = '';
 
     // Create lines for first number

@@ -21,6 +21,12 @@ A kids-friendly, engaging web application to practice math problems with colorfu
   - Sad feedback for incorrect answers with "Show Answer" option
   - Encouraging retry prompts
 - **Score Tracking**: Track problems solved in real-time
+- **Visual Line Representation**: Toggle ON to show vertical lines on the right to help count — great for visual learners
+  - Lines auto-size and are color-coded (pink for first number, cyan for second)
+  - Available for 1-digit addition problems
+  - Hover to zoom the tile by 50%
+- **Read Aloud**: Circular button with 🗣️ icon — reads the problem aloud using browser speech synthesis
+- **Volume Control**: Slider with 🔉 icon to adjust speech volume
 - **Responsive Design**: Works on desktop, tablet, and mobile devices
 
 ## 🚀 Quick Start
@@ -165,6 +171,8 @@ Modify `script.js` `setupGame()` function to allow different digit ranges or add
 - `checkAnswer()`: Validate user answer
 - `showCelebration()`: Display success popup
 - `showIncorrectAnswer()`: Display failure popup
+- `toggleVisualRepresentation()` & `updateVisualRepresentation()`: Show/hide visual line tile
+- `speakProblem()`: Read problem aloud using SpeechSynthesis API
 
 **Styling (`styles.css`):**
 - Mobile-first responsive design

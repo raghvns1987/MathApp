@@ -77,43 +77,33 @@
                 <button class="reset-btn" onclick="resetGame()">🔄 New Game</button>
             </div>
 
-            <div class="problem-box">
-                <div class="problem-display">
-                    <span id="num1" class="number">0</span>
-                    <span class="operator">+</span>
-                    <span id="num2" class="number">0</span>
-                    <span class="equals">=</span>
-                    <span class="question-mark">?</span>
-                </div>
-                <div class="speech-controls">
-                    <button class="speak-btn" onclick="speakProblem()" title="Read problem aloud">
-                        <span class="speak-icon">🔊</span>
-                        <span class="speak-text">Read Aloud</span>
-                    </button>
-                    <div class="volume-control">
-                        <label for="volumeSlider">Volume:</label>
-                        <input type="range" id="volumeSlider" min="0" max="100" value="100" class="volume-slider">
+            <div class="problem-row">
+                <div class="problem-box">
+                    <div class="problem-display">
+                        <span id="num1" class="number">0</span>
+                        <span class="operator">+</span>
+                        <span id="num2" class="number">0</span>
+                        <span class="equals">=</span>
+                        <span class="question-mark">?</span>
                     </div>
-                </div>
-
-                <!-- Visual Representation Toggle & Adjustment -->
-                <div class="visual-rep-controls">
-                    <div class="toggle-container">
+                    <div class="speech-controls">
+                        <button class="speak-btn" onclick="speakProblem()" title="Read problem aloud">
+                            <span class="speak-icon">🗣️</span>
+                        </button>
+                        <div class="volume-control">
+                            <label for="volumeSlider">🔉</label>
+                            <input type="range" id="volumeSlider" min="0" max="100" value="100" class="volume-slider">
+                        </div>
                         <label class="toggle-label">
                             <input type="checkbox" id="visualToggle" class="toggle-checkbox"
-                                onchange="toggleVisualRepresentation()" checked>
+                                onchange="toggleVisualRepresentation()">
                             <span class="toggle-switch"></span>
-                            <span class="toggle-text">Show Counting Lines</span>
+                            <span class="toggle-text">Lines</span>
                         </label>
-                    </div>
-                    <div class="line-size-control">
-                        <label for="lineSizeSlider">Line Size:</label>
-                        <input type="range" id="lineSizeSlider" min="20" max="80" value="40" class="line-size-slider"
-                            onchange="updateVisualRepresentation()">
                     </div>
                 </div>
 
-                <!-- Visual Representation Tile -->
+                <!-- Visual Representation Tile (Right Side) -->
                 <div id="visualTile" class="visual-tile hidden">
                     <div class="lines-container">
                         <div id="linesDisplay" class="lines-display"></div>
