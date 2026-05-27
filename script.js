@@ -8,6 +8,78 @@ let gameState = {
     operation: '' // 'addition' or 'subtraction'
 };
 
+// Sound effects using Web Audio API
+function playSound(type) {
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        if (type === 'correct') {
+            // Clap/celebration sound - three ascending tones
+            playCorrectSound(audioContext);
+        } else if (type === 'incorrect') {
+            // Buzzer/wrong sound
+            playIncorrectSound(audioContext);
+        }
+    } catch (e) {
+        console.log('Audio context not available');
+    }
+}
+
+function playCorrectSound(audioContext) {
+    const now = audioContext.currentTime;
+    const tempo = 0.1;
+    
+    // Create three cheerful tones
+    const frequencies = [523.25, 659.25, 783.99]; // C5, E5, G5 (C major chord)
+    
+    frequencies.forEach((freq, index) => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        
+        osc.frequency.value = freq;
+        osc.type = 'sine';
+        
+        const startTime = now + (index * tempo);
+        const endTime = startTime + (tempo * 1.5);
+        
+        gain.gain.setValueAtTime(0.3, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, endTime);
+        
+        osc.start(startTime);
+        osc.stop(endTime);
+    });
+}
+
+function playIncorrectSound(audioContext) {
+    const now = audioContext.currentTime;
+    
+    // Create buzzer sound - two low tones
+    const frequencies = [200, 150];
+    
+    frequencies.forEach((freq, index) => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        
+        osc.frequency.value = freq;
+        osc.type = 'square';
+        
+        const startTime = now + (index * 0.15);
+        const endTime = startTime + 0.15;
+        
+        gain.gain.setValueAtTime(0.2, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, endTime);
+        
+        osc.start(startTime);
+        osc.stop(endTime);
+    });
+}
+
 // Text-to-Speech functionality
 const synth = window.speechSynthesis;
 let isSpeaking = false;
@@ -202,6 +274,9 @@ function checkAnswer() {
         feedbackElem.className = 'feedback correct';
         feedbackElem.classList.remove('hidden');
 
+        // Play correct sound
+        playSound('correct');
+
         // Show celebration
         showCelebration();
 
@@ -209,6 +284,7 @@ function checkAnswer() {
         createConfetti();
     } else {
         // Wrong answer - show incorrect modal
+        playSound('incorrect');
         showIncorrectAnswer();
     }
 }
